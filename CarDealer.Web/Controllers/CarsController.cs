@@ -7,12 +7,12 @@ namespace CarDealer.Web.Controllers
 
     public class CarsController : Controller
     {
-        private readonly ICarsService cars;
+        private readonly ICarsService service;
 
 
-        public CarsController(ICarsService cars)
+        public CarsController(ICarsService service)
         {
-            this.cars = cars;
+            this.service = service;
         }
 
 
@@ -20,7 +20,7 @@ namespace CarDealer.Web.Controllers
         public IActionResult ByMake(string make)
         {
 
-            var result = cars.ByMake(make);
+            var result = service.ByMake(make);
 
             return View(result);
         }
