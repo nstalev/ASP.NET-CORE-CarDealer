@@ -13,9 +13,4 @@
     <ProjectReference Include="..\CarDealer.Data\CarDealer.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Implementations\" />
-  </ItemGroup>
-
 </Project>

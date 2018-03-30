@@ -10,6 +10,8 @@ namespace CarDealer.Web
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Services;
+    using Services.Implementations;
 
 
     public class Startup
@@ -30,6 +32,8 @@ namespace CarDealer.Web
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CarDealerDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<ICustomersService, CustomersService>();
 
 
             services.AddMvc();
@@ -55,6 +59,15 @@ namespace CarDealer.Web
 
             app.UseMvc(routes =>
             {
+                // routes.MapRoute(
+                //    name: "customers",
+                //    template: "customers/all/{order}",
+                //    defaults: new { controller = "Customers", action = "All" });
+
+                routes.MapRoute(
+                  name: "customers",
+                  template: "{controller=customers}/{action=All}/{order}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
