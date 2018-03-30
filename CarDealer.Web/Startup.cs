@@ -34,7 +34,7 @@ namespace CarDealer.Web
                 .AddDefaultTokenProviders();
 
             services.AddTransient<ICustomersService, CustomersService>();
-
+            services.AddTransient<ICarsService, CarService>();
 
             services.AddMvc();
         }
