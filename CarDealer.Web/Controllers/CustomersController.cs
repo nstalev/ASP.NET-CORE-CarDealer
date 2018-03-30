@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarDealer.Services;
+using CarDealer.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarDealer.Web.Controllers
@@ -19,7 +20,13 @@ namespace CarDealer.Web.Controllers
 
         public IActionResult All(string order)
         {
-            return null;
+            var orderDirection = order.ToLower() == "ascending"
+                ? OrderDirection.Ascending
+                : OrderDirection.Descending;
+
+            var result = this.service.OrderedCustomers(orderDirection);
+
+            return View(result);
         }
     }
 }

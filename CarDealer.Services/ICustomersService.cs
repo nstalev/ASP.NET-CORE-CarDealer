@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace CarDealer.Services
 {
+    using CarDealer.Services.Models;
+    using System.Collections.Generic;
+
     public interface ICustomersService
     {
+        IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order);
     }
 }
