@@ -10,5 +10,7 @@ namespace CarDealer.Services
         IEnumerable<SaleModel> AllSales();
 
         IEnumerable<SaleModel> DiscountedSales(int? discountPercentage);
+
+        SaleModel ById(int id);
     }
 }

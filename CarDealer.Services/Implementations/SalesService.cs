@@ -36,6 +36,8 @@ namespace CarDealer.Services.Implementations
 
         }
 
+      
+
         public IEnumerable<SaleModel> DiscountedSales(int? discountPercentage)
         {
             if (discountPercentage == null)
@@ -72,6 +74,25 @@ namespace CarDealer.Services.Implementations
                   }).ToList();
             }
 
+        }
+
+
+
+        public SaleModel ById(int id)
+        {
+            return db.Sales
+                .Where(s => s.Id == id)
+                .Select(s => new SaleModel
+                {
+                    Id = s.Id,
+                    Make = s.Car.Make,
+                    Model = s.Car.Model,
+                    TravelledDistance = s.Car.TravelledDistance,
+                    Customer = s.Customer.Name,
+                    Price = s.Car.Parts.Sum(p => p.Part.Price),
+                    Discount = Math.Min(1,
+                              s.Discount + (s.Customer.IsYoungDriver ? 0.05 : 0)),
+                }).FirstOrDefault();
         }
     }
 }

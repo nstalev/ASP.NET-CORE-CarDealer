@@ -4,6 +4,7 @@ namespace CarDealer.Web.Controllers
     using CarDealer.Services;
     using Microsoft.AspNetCore.Mvc;
 
+    [Route("sales")]
     public class SalesController : Controller
     {
         private readonly ISalesService service;
@@ -13,7 +14,7 @@ namespace CarDealer.Web.Controllers
             this.service = service;
         }
 
-        [Route("sales")]
+        [Route("")]
         public IActionResult AllSales()
         {
             var allSales = service.AllSales();
@@ -21,7 +22,15 @@ namespace CarDealer.Web.Controllers
             return View(allSales);
         }
 
-        [Route("sales/discounted")]
+        [Route("{id}")]
+        public IActionResult Details(int id)
+        {
+            var currentSale = service.ById(id);
+
+            return View(currentSale);
+        }
+
+        [Route("discounted")]
         public IActionResult DiscountedSales()
         {
             var DiscountedSales = service.DiscountedSales(null);
@@ -29,7 +38,7 @@ namespace CarDealer.Web.Controllers
             return View(DiscountedSales);
         }
 
-        [Route("sales/discounted/{percent}")]
+        [Route("discounted/{percent}")]
         public IActionResult DiscountedSales(int percent)
         {
             var DiscountedSales = service.DiscountedSales(percent);
