@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CarDealer.Services;
-using CarDealer.Services.Models;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CarDealer.Web.Controllers
+﻿namespace CarDealer.Web.Controllers
 {
+    using CarDealer.Services;
+    using CarDealer.Services.Models.Customers;
+    using Microsoft.AspNetCore.Mvc;
+
     public class CustomersController : Controller
     {
         private readonly ICustomersService service;
@@ -25,6 +21,15 @@ namespace CarDealer.Web.Controllers
                 : OrderDirection.Descending;
 
             var result = this.service.OrderedCustomers(orderDirection);
+
+            return View(result);
+        }
+
+
+        [Route("customers/{id}")]
+        public IActionResult CustomersAndSales(int id)
+        {
+            var result = service.CustomerAndSales(id);
 
             return View(result);
         }
