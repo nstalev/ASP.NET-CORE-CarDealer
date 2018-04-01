@@ -1,14 +1,11 @@
-﻿@model IEnumerable<CarDealer.Services.Models.Cars.CarModel>
+﻿@model IEnumerable<CarDealer.Services.Models.Cars.CarWithPartsModel>
 
 @{
-    ViewData["Title"] = "bymake";
+    ViewData["Title"] = "CarsWithParts";
 }
 
-<h2>bymake</h2>
+<h2>CarsWithParts</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table table-striped table-bordered table-responsive table-hover">
     <thead>
         <tr>
@@ -20,6 +17,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TravelledDistance)
+                </th>
+                <th>
+                    Parts
                 </th>
         </tr>
     </thead>
@@ -35,7 +35,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TravelledDistance)
             </td>
-           
+            <td>
+               <ul>
+                        @foreach (var part in item.Parts)
+                        {
+                            <li>@part.Name: @part.Price.ToString("C2")</li>
+                        }
+               </ul>
+            </td>
         </tr>
 }
     </tbody>

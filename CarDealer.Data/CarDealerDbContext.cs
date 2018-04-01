@@ -17,10 +17,31 @@ namespace CarDealer.Data
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Part> Parts { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<PartCar> PartCar { get; set; }
+
+
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder
+           .Entity<PartCar>()
+           .HasKey(pc => new { pc.PartId, pc.CarId });
+
+
+            builder
+                .Entity<PartCar>()
+                .HasOne(pc => pc.Car)
+                .WithMany(c => c.Parts)
+                .HasForeignKey(pc => pc.CarId);
+
+            builder
+              .Entity<PartCar>()
+              .HasOne(pc => pc.Part)
+              .WithMany(p => p.Cars)
+              .HasForeignKey(pc => pc.PartId);
+
+
             builder
                 .Entity<Sale>()
                 .HasOne(s => s.Car)
@@ -40,24 +61,6 @@ namespace CarDealer.Data
                 .WithMany(s => s.Parts)
                 .HasForeignKey(p => p.SupplierId);
 
-
-
-            builder
-                .Entity<PartCar>()
-                .HasKey(pc => new { pc.PartId, pc.CarId });
-
-
-            builder
-                .Entity<PartCar>()
-                .HasOne(pc => pc.Car)
-                .WithMany(c => c.Parts)
-                .HasForeignKey(pc => pc.CarId);
-
-            builder
-                .Entity<PartCar>()
-                .HasOne(pc => pc.Part)
-                .WithMany(p => p.Cars)
-                .HasForeignKey(pc => pc.PartId);
 
 
             base.OnModelCreating(builder);

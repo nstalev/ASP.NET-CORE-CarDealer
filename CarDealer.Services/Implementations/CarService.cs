@@ -1,11 +1,13 @@
 ﻿
-
 namespace CarDealer.Services.Implementations
 {
     using System.Collections.Generic;
     using System.Linq;
     using CarDealer.Data;
+    using CarDealer.Services.Models.Cars;
     using CarDealer.Services.Models;
+    using Microsoft.EntityFrameworkCore;
+    using CarDealer.Data.Models;
 
     public class CarService : ICarsService
     {
@@ -29,6 +31,28 @@ namespace CarDealer.Services.Implementations
                    Model = car.Model,
                    TravelledDistance = car.TravelledDistance
                }).ToList();
+        }
+
+
+
+        public IEnumerable<CarWithPartsModel> CarsWithParts()
+        {
+            var result =  this.db.Cars
+                .Select(c => new CarWithPartsModel
+                {
+                    Make = c.Make,
+                    Model = c.Model,
+                    TravelledDistance = c.TravelledDistance,
+                    Parts = c.Parts.Select(p => new PartModel
+                    {
+                        Name = p.Part.Name,
+                        Price = p.Part.Price
+                    }).ToList()
+
+                }).ToList();
+
+
+            return result;
         }
     }
 }
