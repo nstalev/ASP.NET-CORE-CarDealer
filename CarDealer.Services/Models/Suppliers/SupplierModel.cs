@@ -1,6 +1,6 @@
 ﻿
 
-namespace CarDealer.Services.Models
+namespace CarDealer.Services.Models.Suppliers
 {
     public class SupplierModel
     {

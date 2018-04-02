@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CarDealer.Services.Models.Parts;
-using CarDealer.Data;
-using System.Linq;
-
-namespace CarDealer.Services.Implementations
+﻿namespace CarDealer.Services.Implementations
 {
+    using System.Collections.Generic;
+    using CarDealer.Services.Models.Parts;
+    using CarDealer.Data;
+    using System.Linq;
+    using CarDealer.Data.Models;
+
     public class PartsService : IPartsService
     {
 
@@ -35,6 +34,21 @@ namespace CarDealer.Services.Implementations
                     Supplier = p.Supplier.Name
                 })
                 .ToList();
+        }
+
+        public void Create(string name, decimal price, int quantity, int supplierId)
+        {
+            var newPart = new Part()
+            {
+                Name = name,
+                Price = price,
+                Quantity = quantity > 0 ? quantity : 1,
+                SupplierId = supplierId
+            };
+
+            db.Parts.Add(newPart);
+            db.SaveChanges();
+
         }
 
         public int Total()

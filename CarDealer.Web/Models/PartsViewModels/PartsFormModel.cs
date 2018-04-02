@@ -1,14 +1,13 @@
 ﻿
 
-namespace CarDealer.Data.Models
+namespace CarDealer.Web.Models.PartsViewModels
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Part
+    public class PartsFormModel
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
@@ -20,8 +19,6 @@ namespace CarDealer.Data.Models
 
         public int SupplierId { get; set; }
 
-        public Supplier Supplier { get; set; }
-
-        public List<PartCar> Cars { get; set; } = new List<PartCar>();
+        public IEnumerable<SelectListItem> Suppliers { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace CarDealer.Services.Implementations
     using System.Linq;
     using CarDealer.Data;
     using System.Collections.Generic;
-    using CarDealer.Services.Models;
+    using CarDealer.Services.Models.Suppliers;
 
     public class SuppliersService : ISuppliersService
     {
@@ -18,6 +18,7 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
+     
 
         public IEnumerable<SupplierModel> Suppliers(bool isImporter)
         {
@@ -31,6 +32,16 @@ namespace CarDealer.Services.Implementations
 
              }).ToList();
 
+        }
+
+        public IEnumerable<SuppliersListModel> AllSuppliers()
+        {
+            return db.Suppliers
+                .Select(s => new SuppliersListModel
+                {
+                    Id = s.Id,
+                    Name= s.Name
+                });
         }
     }
 }

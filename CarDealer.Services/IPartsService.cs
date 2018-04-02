@@ -9,6 +9,8 @@ namespace CarDealer.Services
     {
         IEnumerable<PartsListModel> AllParts(int page, int pageSize);
 
+        void Create(string name, decimal price, int quantity, int supplierId);
+
         int Total();
     }
 }

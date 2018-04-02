@@ -3,7 +3,7 @@ namespace CarDealer.Web.Controllers
 {
     using System.Collections.Generic;
     using CarDealer.Services;
-    using CarDealer.Services.Models;
+    using CarDealer.Services.Models.Suppliers;
     using Microsoft.AspNetCore.Mvc;
 
     public class SuppliersController : Controller
