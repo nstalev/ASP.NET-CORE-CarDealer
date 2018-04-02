@@ -7,6 +7,7 @@ namespace CarDealer.Services.Implementations
     using CarDealer.Data;
     using CarDealer.Services.Models.Cars;
     using CarDealer.Services.Models.Customers;
+    using CarDealer.Data.Models;
 
 
     public class CustomersService : ICustomersService
@@ -62,6 +63,20 @@ namespace CarDealer.Services.Implementations
                 .FirstOrDefault();
 
             return customer;
+        }
+
+        public void Create(string name, DateTime birthDate, bool isYoungDriver)
+        {
+            var newCustomer = new Customer()
+            {
+                Name = name,
+                BirthDate = birthDate,
+                IsYoungDriver = isYoungDriver
+            };
+
+            db.Customers.Add(newCustomer);
+            db.SaveChanges();
+
         }
     }
 }

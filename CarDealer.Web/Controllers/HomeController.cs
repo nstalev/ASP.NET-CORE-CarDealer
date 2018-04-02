@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using CarDealer.Web.Models;
+﻿
 
 namespace CarDealer.Web.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using CarDealer.Web.Models;
+
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -2,7 +2,6 @@
 
 namespace CarDealer.Web
 {
-
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
 

@@ -1,7 +1,6 @@
 ﻿
 namespace CarDealer.Web
 {
-
     using Data;
     using Data.Models;
     using Microsoft.AspNetCore.Builder;

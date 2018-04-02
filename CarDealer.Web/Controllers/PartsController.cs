@@ -1,5 +1,4 @@
 ﻿
-
 namespace CarDealer.Web.Controllers
 {
     using System;
@@ -66,11 +65,6 @@ namespace CarDealer.Web.Controllers
 
           return RedirectToAction(nameof(All));
         }
-
-
-
-
-
 
 
         private IEnumerable<SelectListItem> GetSuppliers()

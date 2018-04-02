@@ -19,8 +19,6 @@ namespace CarDealer.Data
         public DbSet<Supplier> Suppliers { get; set; }
 
 
-        
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
