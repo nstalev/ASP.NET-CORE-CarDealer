@@ -25,9 +25,14 @@ namespace CarDealer.Web.Controllers
         [Route("{id}")]
         public IActionResult Details(int id)
         {
-            var currentSale = service.ById(id);
+            var customerWithSales = service.ById(id);
 
-            return View(currentSale);
+            if (customerWithSales == null)
+            {
+                return NotFound();
+            }
+
+            return View(customerWithSales);
         }
 
         [Route("discounted")]

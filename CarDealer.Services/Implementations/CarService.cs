@@ -8,6 +8,7 @@ namespace CarDealer.Services.Implementations
     using CarDealer.Services.Models;
     using Microsoft.EntityFrameworkCore;
     using CarDealer.Data.Models;
+    using CarDealer.Services.Models.Parts;
 
     public class CarService : ICarsService
     {

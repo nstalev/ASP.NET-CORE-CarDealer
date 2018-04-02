@@ -31,8 +31,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li>@Html.ActionLink("Customers", "All", "Customers", new { order = "ascending" })</li>
+
+                    <li>@Html.ActionLink("Cars", "Parts", "Cars")</li>
+                    <li>@Html.ActionLink("Parts", "All", "Parts")</li>
+
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
