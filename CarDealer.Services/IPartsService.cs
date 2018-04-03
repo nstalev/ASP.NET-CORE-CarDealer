@@ -18,6 +18,6 @@ namespace CarDealer.Services
         int Total();
 
         bool Exists(int id);
-
+        void Delete(int id);
     }
 }

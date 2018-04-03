@@ -46,19 +46,19 @@ namespace CarDealer.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PartsFormModel model)
+        public IActionResult Create(PartsFormModel partModel)
         {
             if (!ModelState.IsValid)
             {
-                model.Suppliers = GetSuppliers();
-                return View(model);
+                partModel.Suppliers = GetSuppliers();
+                return View(partModel);
             }
 
             this.parts.Create(
-                model.Name,
-                model.Price,
-                model.Quantity,
-                model.SupplierId
+                partModel.Name,
+                partModel.Price,
+                partModel.Quantity,
+                partModel.SupplierId
                 );
 
 
@@ -78,18 +78,20 @@ namespace CarDealer.Web.Controllers
             var part = this.parts.ById(id);
 
 
-            return View(new PartsEditFormModel()
+            return View(new PartsFormModel
             {
                  Id = part.Id,
                  Name = part.Name,
                  Price= part.Price,
-                 Quantity = part.Quantity
+                 Quantity = part.Quantity,
+                 IsEdit = true
+                 
             });
         }
 
         [Route("parts/edit/{id}")]
         [HttpPost]
-        public IActionResult Edit(int id, PartsEditFormModel model)
+        public IActionResult Edit(int id, PartsFormModel partModel)
         {
             var partExists = this.parts.Exists(id);
             if (!partExists)
@@ -99,10 +101,36 @@ namespace CarDealer.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(partModel);
             }
 
-            this.parts.Edit(model.Id, model.Price, model.Quantity);
+            this.parts.Edit(partModel.Id, partModel.Price, partModel.Quantity);
+
+            return RedirectToAction(nameof(All));
+        }
+
+
+        [Route("parts/delete/{id}")]
+        public IActionResult Delete (int id)
+        {
+            var part = this.parts.ById(id);
+            return View(new DeletePartModel()
+            {
+                Id = id,
+                Name = part.Name
+            });
+        }
+
+        [Route("parts/delete/{id}")]
+        [HttpPost]
+        public IActionResult Delete(int id, DeletePartModel partModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(partModel);
+            }
+
+            this.parts.Delete(id);
 
             return RedirectToAction(nameof(All));
         }

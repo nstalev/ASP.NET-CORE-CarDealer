@@ -70,9 +70,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier)
             </td>
-           <td>
-               @Html.ActionLink("Edit", "Edit", "Parts", new {id = item.Id }, new { @class = "btn btn-warning btn-sm" })
-           </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Parts", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                @Html.ActionLink("Delete", "Delete", "Parts", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+            </td>
         </tr>
 }
     </tbody>

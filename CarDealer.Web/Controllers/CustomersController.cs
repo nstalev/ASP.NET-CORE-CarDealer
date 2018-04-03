@@ -43,17 +43,17 @@
 
         [HttpPost]
         [Route(nameof(Create))]
-        public IActionResult Create(CustomerFormModel model)
+        public IActionResult Create(CustomerFormModel customerModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(customerModel);
             }
 
             customers.Create(
-                model.Name,
-                model.BirthDate,
-                model.IsYoungDriver
+               customerModel.Name,
+               customerModel.BirthDate,
+               customerModel.IsYoungDriver
                 );
 
             return RedirectToAction(nameof(All), new { order = "ascending" });
@@ -85,7 +85,7 @@
 
         [HttpPost]
         [Route("customers/edit/{id}")]
-        public IActionResult Edit(int id, CustomerFormModel model)
+        public IActionResult Edit(int id, CustomerFormModel customerModel)
         {
             var customerExists = customers.Exists(id);
 
@@ -96,10 +96,10 @@
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(customerModel);
             }
 
-            customers.Edit(model.Id, model.Name, model.BirthDate, model.IsYoungDriver);
+            customers.Edit(customerModel.Id, customerModel.Name, customerModel.BirthDate, customerModel.IsYoungDriver);
 
             return RedirectToAction(nameof(All), new { order = "ascending" });
         }

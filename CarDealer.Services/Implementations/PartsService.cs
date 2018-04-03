@@ -52,9 +52,7 @@
 
             db.Parts.Add(newPart);
             db.SaveChanges();
-
         }
-
      
 
         public int Total()
@@ -80,9 +78,27 @@
         {
             var part = db.Parts.Find(id);
 
+            if (part == null)
+            {
+                return;
+            }
+
             part.Price = price;
             part.Quantity = quantity;
 
+            db.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var part = db.Parts.Find(id);
+
+            if (part == null)
+            {
+                return;
+            }
+
+            db.Parts.Remove(part);
             db.SaveChanges();
         }
     }

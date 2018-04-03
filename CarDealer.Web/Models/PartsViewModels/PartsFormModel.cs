@@ -14,6 +14,7 @@ namespace CarDealer.Web.Models.PartsViewModels
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [Range(0, double.MaxValue, ErrorMessage ="Price must be positive number")]
         public decimal Price { get; set; }
 
         [Range(0, int.MaxValue)]
@@ -22,5 +23,7 @@ namespace CarDealer.Web.Models.PartsViewModels
         public int SupplierId { get; set; }
 
         public IEnumerable<SelectListItem> Suppliers { get; set; }
+
+        public bool IsEdit { get; set; }
     }
 }

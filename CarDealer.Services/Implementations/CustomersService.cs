@@ -102,9 +102,12 @@ namespace CarDealer.Services.Implementations
         public void Edit(int id, string name, DateTime birthDate, bool isYoungDriver)
         {
 
-            var customer = db.Customers
-                .Where(c => c.Id == id)
-                .FirstOrDefault();
+            var customer = db.Customers.Find(id);
+
+            if (customer == null)
+            {
+                return;
+            }
 
             customer.Name = name;
             customer.BirthDate = birthDate;
