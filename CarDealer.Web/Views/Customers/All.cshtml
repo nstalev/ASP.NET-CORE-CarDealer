@@ -22,6 +22,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.IsYoungDriver)
                 </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
             </td>
             <td>
                 @(item.IsYoungDriver? "Yes": "No")
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
             </td>
         </tr>
 }

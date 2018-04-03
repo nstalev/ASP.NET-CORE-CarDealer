@@ -33,6 +33,16 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li>@Html.ActionLink("Customers", "All", "Customers", new { order = "ascending" })</li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("All Sales", "AllSales", "Sales")</li>
+                            <li>@Html.ActionLink("Discounted", "DiscountedSales", "Sales")</li>
+                        </ul>
+                        
+                    </li>
                     <li>@Html.ActionLink("Cars", "Parts", "Cars")</li>
                     <li>@Html.ActionLink("Parts", "All", "Parts")</li>
 

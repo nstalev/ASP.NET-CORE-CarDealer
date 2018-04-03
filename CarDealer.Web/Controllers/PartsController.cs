@@ -66,6 +66,50 @@ namespace CarDealer.Web.Controllers
           return RedirectToAction(nameof(All));
         }
 
+        [Route("parts/edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var partExists = this.parts.Exists(id);
+            if (!partExists)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var part = this.parts.ById(id);
+
+
+            return View(new PartsEditFormModel()
+            {
+                 Id = part.Id,
+                 Name = part.Name,
+                 Price= part.Price,
+                 Quantity = part.Quantity
+            });
+        }
+
+        [Route("parts/edit/{id}")]
+        [HttpPost]
+        public IActionResult Edit(int id, PartsEditFormModel model)
+        {
+            var partExists = this.parts.Exists(id);
+            if (!partExists)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            this.parts.Edit(model.Id, model.Price, model.Quantity);
+
+            return RedirectToAction(nameof(All));
+        }
+
+
+
+
 
         private IEnumerable<SelectListItem> GetSuppliers()
         => this.suppliers

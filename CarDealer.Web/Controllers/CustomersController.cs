@@ -35,13 +35,14 @@
             return View(result);
         }
 
-
+        [Route(nameof(Create))]
         public IActionResult Create()
         {
             return View( new CustomerFormModel());
         }
 
         [HttpPost]
+        [Route(nameof(Create))]
         public IActionResult Create(CustomerFormModel model)
         {
             if (!ModelState.IsValid)
@@ -57,5 +58,51 @@
 
             return RedirectToAction(nameof(All), new { order = "ascending" });
         }
+
+
+        [Route("customers/edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var customerExists = customers.Exists(id);
+
+            if (!customerExists)
+            {
+                return RedirectToAction(nameof(All), new { order = "ascending" });
+            }
+
+            var customer = this.customers.ById(id);
+
+            var vm = new CustomerFormModel()
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                BirthDate = customer.BirthDate,
+                IsYoungDriver = customer.IsYoungDriver
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [Route("customers/edit/{id}")]
+        public IActionResult Edit(int id, CustomerFormModel model)
+        {
+            var customerExists = customers.Exists(id);
+
+            if (!customerExists)
+            {
+                return RedirectToAction(nameof(All), new { order = "ascending" });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            customers.Edit(model.Id, model.Name, model.BirthDate, model.IsYoungDriver);
+
+            return RedirectToAction(nameof(All), new { order = "ascending" });
+        }
+
     }
 }

@@ -20,6 +20,11 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
+        public bool Exists(int id)
+        {
+            return db.Customers.Any(c => c.Id == id);
+        }
+
         public IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order)
         {
             var customersQuery = this.db.Customers.AsQueryable();
@@ -41,6 +46,7 @@ namespace CarDealer.Services.Implementations
             return customersQuery
                 .Select(c => new CustomerModel()
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     BirthDate = c.BirthDate,
                     IsYoungDriver = c.IsYoungDriver
@@ -78,5 +84,36 @@ namespace CarDealer.Services.Implementations
             db.SaveChanges();
 
         }
+
+        public CustomerModel ById(int id)
+        {
+            return db.Customers
+                .Where(c => c.Id == id)
+                .Select(c => new CustomerModel
+                {
+                     Id = c.Id,
+                     Name = c.Name,
+                     BirthDate = c.BirthDate,
+                     IsYoungDriver = c.IsYoungDriver
+                })
+                .FirstOrDefault();
+        }
+
+        public void Edit(int id, string name, DateTime birthDate, bool isYoungDriver)
+        {
+
+            var customer = db.Customers
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            customer.Name = name;
+            customer.BirthDate = birthDate;
+            customer.IsYoungDriver = isYoungDriver;
+
+            db.SaveChanges();
+
+        }
+
+
     }
 }

@@ -16,6 +16,10 @@
             this.db = db;
         }
 
+        public bool Exists(int id)
+        {
+            return db.Parts.Any(p => p.Id == id);
+        }
 
 
         public IEnumerable<PartsListModel> AllParts(int page, int pageSize)
@@ -51,9 +55,35 @@
 
         }
 
+     
+
         public int Total()
         {
             return this.db.Parts.Count();
+        }
+
+        public PartModel ById(int id)
+        {
+            return db.Parts
+                .Where(p => p.Id == id)
+                .Select(p => new PartModel
+                {
+                       Id = p.Id,
+                       Name = p.Name,
+                       Price = p.Price,
+                       Quantity = p.Quantity
+                })
+                .FirstOrDefault();
+        }
+
+        public void Edit(int id, decimal price, int quantity)
+        {
+            var part = db.Parts.Find(id);
+
+            part.Price = price;
+            part.Quantity = quantity;
+
+            db.SaveChanges();
         }
     }
 }
