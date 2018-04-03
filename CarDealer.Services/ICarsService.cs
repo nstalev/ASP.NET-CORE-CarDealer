@@ -8,6 +8,8 @@ namespace CarDealer.Services
     {
         IEnumerable<CarModel> ByMake(string make);
 
-        IEnumerable<CarWithPartsModel> CarsWithParts();
+        int Total();
+
+        IEnumerable<CarWithPartsModel> CarsWithParts(int page, int pageSize);
     }
 }

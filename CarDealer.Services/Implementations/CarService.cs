@@ -36,9 +36,12 @@ namespace CarDealer.Services.Implementations
 
 
 
-        public IEnumerable<CarWithPartsModel> CarsWithParts()
+        public IEnumerable<CarWithPartsModel> CarsWithParts(int page, int pageSize)
         {
             var result =  this.db.Cars
+                .OrderBy(c => c.Make)
+                .Skip((page-1) * pageSize)
+                .Take(pageSize)
                 .Select(c => new CarWithPartsModel
                 {
                     Make = c.Make,
@@ -54,6 +57,11 @@ namespace CarDealer.Services.Implementations
 
 
             return result;
+        }
+
+        public int Total()
+        {
+            return this.db.Cars.Count();
         }
     }
 }

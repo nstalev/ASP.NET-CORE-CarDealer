@@ -41,10 +41,10 @@
                             <li>@Html.ActionLink("All Sales", "AllSales", "Sales")</li>
                             <li>@Html.ActionLink("Discounted", "DiscountedSales", "Sales")</li>
                         </ul>
-                        
+
                     </li>
-                    <li>@Html.ActionLink("Cars", "Parts", "Cars")</li>
-                    <li>@Html.ActionLink("Parts", "All", "Parts")</li>
+                    <li><a asp-controller="Cars" asp-action="CarsWithParts">Cars</a></li>
+                    <li><a asp-controller="Parts" asp-action="All">Parts</a></li>
 
 
                 </ul>

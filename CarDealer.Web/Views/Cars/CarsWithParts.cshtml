@@ -1,49 +1,74 @@
-﻿@model IEnumerable<CarDealer.Services.Models.Cars.CarWithPartsModel>
+﻿@model CarsListModel
 
 @{
     ViewData["Title"] = "CarsWithParts";
 }
 
+@{
+    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
+    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
+
+}
 <h2>CarsWithParts</h2>
+<hr />
+
+<ul class="pagination">
+    <li class="page-item @peviousPageDisable">
+        <a class="page-link" href="parts?page=@Model.PreviousPage">Previous</a>
+    </li>
+    <li class="page-item @nextPageDisable">
+        <a class="page-link" href="parts?page=@Model.NextPage">Next</a>
+    </li>
+</ul>
 
 <table class="table table-striped table-bordered table-responsive table-hover">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Make)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Model)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TravelledDistance)
-                </th>
-                <th>
-                    Parts
-                </th>
+            <th>
+                Make
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                TravelledDistance
+            </th>
+            <th>
+                Parts
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelledDistance)
-            </td>
-            <td>
-               <ul>
+        @foreach (var item in Model.Cars)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelledDistance)
+                </td>
+                <td>
+                    <ul>
                         @foreach (var part in item.Parts)
                         {
                             <li>@part.Name: @part.Price.ToString("C2")</li>
                         }
-               </ul>
-            </td>
-        </tr>
-}
+                    </ul>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<ul class="pagination">
+    <li class="page-item @peviousPageDisable">
+        <a class="page-link" href="parts?page=@Model.PreviousPage">Previous</a>
+    </li>
+    <li class="page-item @nextPageDisable">
+        <a class="page-link" href="parts?page=@Model.NextPage">Next</a>
+    </li>
+</ul>

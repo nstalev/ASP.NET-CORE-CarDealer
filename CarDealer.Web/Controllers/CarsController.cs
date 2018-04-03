@@ -3,19 +3,19 @@
 namespace CarDealer.Web.Controllers
 {
     using CarDealer.Services;
+    using CarDealer.Web.Models.CarsViewModels;
     using Microsoft.AspNetCore.Mvc;
-
-
+    using System;
 
     [Route("cars")]
     public class CarsController : Controller
     {
-        private readonly ICarsService service;
+        private readonly ICarsService cars;
+        private const int pageSize = 25;
 
-
-        public CarsController(ICarsService service)
+        public CarsController(ICarsService cars)
         {
-            this.service = service;
+            this.cars = cars;
         }
 
 
@@ -23,7 +23,7 @@ namespace CarDealer.Web.Controllers
         public IActionResult ByMake(string make)
         {
 
-            var result = service.ByMake(make);
+            var result = cars.ByMake(make);
 
             return View(result);
         }
@@ -31,11 +31,16 @@ namespace CarDealer.Web.Controllers
        
 
         [Route("parts", Order = 1)]
-        public IActionResult CarsWithParts()
+        public IActionResult CarsWithParts(int page = 1)
         {
-            var result = service.CarsWithParts();
 
-            return View(result);
+            return View(new CarsListModel()
+            {
+                Cars = cars.CarsWithParts(page, pageSize),
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(this.cars.Total() / (double)pageSize)
+
+            });
         }
 
 

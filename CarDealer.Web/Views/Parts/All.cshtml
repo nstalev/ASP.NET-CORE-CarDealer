@@ -70,9 +70,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier)
             </td>
+            @{ 
+                var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
+            }
+
             <td>
-                @Html.ActionLink("Edit", "Edit", "Parts", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
-                @Html.ActionLink("Delete", "Delete", "Parts", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                <a asp-controller="Parts" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
+                <a asp-controller="Parts" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
 }
