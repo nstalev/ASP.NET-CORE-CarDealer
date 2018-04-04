@@ -12,6 +12,6 @@ namespace CarDealer.Services
 
         IEnumerable<CarWithPartsModel> CarsWithParts(int page, int pageSize);
 
-        void Create(string make, string model, long travelledDistance);
+        void Create(string make, string model, long travelledDistance, IEnumerable<int> PartsIds);
     }
 }

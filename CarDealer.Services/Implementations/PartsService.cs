@@ -40,6 +40,18 @@
                 .ToList();
         }
 
+        public IEnumerable<PartBasicModel> BasicParts()
+        {
+            return db.Parts
+                .Select(p => new PartBasicModel
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                })
+                .ToList();
+        }
+
+
         public void Create(string name, decimal price, int quantity, int supplierId)
         {
             var newPart = new Part()
@@ -101,5 +113,7 @@
             db.Parts.Remove(part);
             db.SaveChanges();
         }
+
+       
     }
 }

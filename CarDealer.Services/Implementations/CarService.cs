@@ -64,7 +64,7 @@ namespace CarDealer.Services.Implementations
             return result;
         }
 
-        public void Create(string make, string model, long travelledDistance)
+        public void Create(string make, string model, long travelledDistance, IEnumerable<int> PartsIds)
         {
             var car = new Car()
             {
@@ -73,11 +73,18 @@ namespace CarDealer.Services.Implementations
                 TravelledDistance = travelledDistance
             };
 
+
+            foreach (var partId in PartsIds)
+            {
+                var part = db.Parts.Find(partId);
+                car.Parts.Add(new PartCar { PartId = partId });
+            }
+
             this.db.Cars.Add(car);
             this.db.SaveChanges();
 
         }
 
-      
+    
     }
 }

@@ -1,21 +1,26 @@
 ﻿
-
 namespace CarDealer.Web.Controllers
 {
     using CarDealer.Services;
     using CarDealer.Web.Models.CarsViewModels;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [Route("cars")]
     public class CarsController : Controller
     {
         private readonly ICarsService cars;
+        private readonly IPartsService parts;
         private const int pageSize = 25;
 
-        public CarsController(ICarsService cars)
+        public CarsController(ICarsService cars,
+                              IPartsService parts)
         {
             this.cars = cars;
+            this.parts = parts;
         }
 
 
@@ -46,7 +51,10 @@ namespace CarDealer.Web.Controllers
         [Route("create", Order = 1)]
         public IActionResult Create()
         {
-            return View( new CarFormModel());
+            return View(new CarFormModel
+            {
+                Parts = GetParts()
+            });
         }
 
         [HttpPost]
@@ -55,16 +63,31 @@ namespace CarDealer.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                carModel.Parts = GetParts();
                 return View(carModel);
             }
 
             this.cars.Create(
                 carModel.Make,
                 carModel.Model,
-                carModel.TravelledDistance);
+                carModel.TravelledDistance,
+                carModel.PartsIds);
 
             return RedirectToAction(nameof(CarsWithParts));
         }
+
+
+        private IEnumerable<SelectListItem> GetParts()
+         =>    this.parts.BasicParts()
+                 .OrderBy(p => p.Name)
+                 .Select(p => new SelectListItem
+                 {
+                     Text = p.Name,
+                     Value = p.Id.ToString()
+                 });
+
+              
+              
 
     }
 }

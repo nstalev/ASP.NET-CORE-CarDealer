@@ -2,6 +2,8 @@
 namespace CarDealer.Web.Models.CarsViewModels
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CarFormModel
     {
@@ -14,5 +16,9 @@ namespace CarDealer.Web.Models.CarsViewModels
 
         [Range(0, long.MaxValue)]
         public long TravelledDistance { get; set; }
+
+        public IEnumerable<int> PartsIds { get; set; }
+
+        public IEnumerable<SelectListItem> Parts { get; set; }
     }
 }

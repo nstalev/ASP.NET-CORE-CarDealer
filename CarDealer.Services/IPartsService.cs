@@ -15,6 +15,8 @@ namespace CarDealer.Services
 
         void Edit(int id, decimal price, int quantity);
 
+        IEnumerable<PartBasicModel> BasicParts();
+
         int Total();
 
         bool Exists(int id);
