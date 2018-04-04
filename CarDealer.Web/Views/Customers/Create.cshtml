@@ -4,11 +4,15 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-      @Html.Partial("_CustomerForm", Model)
+        @Html.Partial("_CustomerForm", Model)
     </div>
 </div>
 
+@{
+    var routeValue = new Dictionary<string, string> { ["order"] = "ascending" };
+}
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="All" asp-all-route-data=routeValue>Back to List</a>
 </div>
 

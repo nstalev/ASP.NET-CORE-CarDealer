@@ -43,6 +43,28 @@ namespace CarDealer.Web.Controllers
             });
         }
 
+        [Route("create", Order = 1)]
+        public IActionResult Create()
+        {
+            return View( new CarFormModel());
+        }
+
+        [HttpPost]
+        [Route("create", Order = 1)]
+        public IActionResult Create(CarFormModel carModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(carModel);
+            }
+
+            this.cars.Create(
+                carModel.Make,
+                carModel.Model,
+                carModel.TravelledDistance);
+
+            return RedirectToAction(nameof(CarsWithParts));
+        }
 
     }
 }

@@ -19,6 +19,11 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
+        public int Total()
+        {
+            return this.db.Cars.Count();
+        }
+
 
         public IEnumerable<CarModel> ByMake(string make)
         {
@@ -59,9 +64,20 @@ namespace CarDealer.Services.Implementations
             return result;
         }
 
-        public int Total()
+        public void Create(string make, string model, long travelledDistance)
         {
-            return this.db.Cars.Count();
+            var car = new Car()
+            {
+                Make = make,
+                Model = model,
+                TravelledDistance = travelledDistance
+            };
+
+            this.db.Cars.Add(car);
+            this.db.SaveChanges();
+
         }
+
+      
     }
 }

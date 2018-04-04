@@ -1,0 +1,17 @@
+﻿@model CarFormModel
+
+<h4>Create new Car</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @Html.Partial("_CarForm", Model)
+    </div>
+</div>
+
+@{
+    var routeValue = new Dictionary<string, string> { ["order"] = "ascending" };
+}
+
+<div>
+    <a asp-action="Parts">Back to List</a>
+</div>
