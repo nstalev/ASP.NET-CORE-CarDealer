@@ -9,6 +9,8 @@ namespace CarDealer.Services
     {
         IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order);
 
+        IEnumerable<CustomerBasicModel> AllCustomers();
+
         CustomerSalesModel CustomerAndSales(int id);
 
         CustomerModel ById(int id);

@@ -117,6 +117,15 @@ namespace CarDealer.Services.Implementations
 
         }
 
-
+        public IEnumerable<CustomerBasicModel> AllCustomers()
+        {
+            return db.Customers
+                 .Select(c => new CustomerBasicModel
+                 {
+                     Id = c.Id,
+                     Name = c.Name
+                 })
+                 .ToList();
+        }
     }
 }
