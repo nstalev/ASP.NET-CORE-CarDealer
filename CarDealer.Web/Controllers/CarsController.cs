@@ -1,9 +1,11 @@
 ﻿
 namespace CarDealer.Web.Controllers
 {
+    using CarDealer.Data.Models;
     using CarDealer.Services;
     using CarDealer.Web.Models.CarsViewModels;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
@@ -13,15 +15,21 @@ namespace CarDealer.Web.Controllers
     [Route("cars")]
     public class CarsController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ICarsService cars;
         private readonly IPartsService parts;
+        private readonly ILogService logs;
         private const int pageSize = 25;
 
-        public CarsController(ICarsService cars,
-                              IPartsService parts)
+        public CarsController(UserManager<User> userManager,
+                              ICarsService cars,
+                              IPartsService parts,
+                              ILogService logs)
         {
+            _userManager = userManager;
             this.cars = cars;
             this.parts = parts;
+            this.logs = logs;
         }
 
         [TempData]
@@ -74,12 +82,17 @@ namespace CarDealer.Web.Controllers
                 return View(carModel);
             }
 
+            var userId =  _userManager.GetUserId(HttpContext.User);
+
             this.cars.Create(
                 carModel.Make,
                 carModel.Model,
                 carModel.TravelledDistance,
                 carModel.PartsIds);
 
+
+
+            this.logs.Add(userId, "Add", "Car", DateTime.Now);
 
             StatusMessage = "New Car have been created!";
 

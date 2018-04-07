@@ -42,6 +42,7 @@ namespace CarDealer.Web
             services.AddTransient<ISuppliersService, SuppliersService>();
             services.AddTransient<ISalesService, SalesService>();
             services.AddTransient<IPartsService, PartsService>();
+            services.AddTransient<ILogService, LogService>();
 
             services.AddMvc();
         }
