@@ -6,6 +6,7 @@ namespace CarDealer.Services.Implementations
     using CarDealer.Data;
     using System.Linq;
     using System;
+    using CarDealer.Data.Models;
 
     public class SalesService : ISalesService
     {
@@ -93,6 +94,62 @@ namespace CarDealer.Services.Implementations
                     Discount = Math.Min(1,
                               s.Discount + (s.Customer.IsYoungDriver ? 0.05 : 0)),
                 }).FirstOrDefault();
+        }
+
+
+        public SaleReviewModel SaleReview(int carId, int customerId, int discount)
+        {
+            var car = db.Cars
+                .Where(c => c.Id == carId)
+                .Select(c => new
+                {
+                    Name = $"{c.Make} {c.Model}",
+                    Price = c.Parts.Sum(p => p.Part.Price)
+                })
+                .FirstOrDefault();
+
+
+            var customer = db.Customers.Find(customerId);
+            
+            int discountPercentage = discount;
+            string discoutnView = $"{discount.ToString()}%";
+            
+
+            if (customer.IsYoungDriver)
+            {
+                discountPercentage += 5;
+                discoutnView += " (5%)";
+            }
+
+            decimal discountFloat = ((decimal)1 - (decimal)(discountPercentage / (decimal)100));
+            decimal discountNum = ( (decimal)(discountPercentage / (decimal)100));
+
+            return new SaleReviewModel
+            {
+                Car = car.Name,
+                CarId = carId,
+                Customer = customer.Name,
+                CustomerId = customerId,
+                DiscountVeiw = discoutnView,
+                CarPrice = car.Price,
+                FinalCarPrice = (decimal)car.Price * discountFloat,
+                Discount = (double)discountNum
+            };
+        }
+
+        public void CreateNewSale(int carId, int customerId, double discount)
+        {
+
+            var sale = new Sale()
+            { 
+                CarId = carId,
+                CustomerId = customerId,
+                Discount = discount
+            };
+
+            db.Sales.Add(sale);
+            db.SaveChanges();
+
         }
     }
 }

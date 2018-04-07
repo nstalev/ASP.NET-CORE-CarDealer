@@ -2,6 +2,7 @@
 namespace CarDealer.Web.Controllers
 {
     using CarDealer.Services;
+    using CarDealer.Services.Models.Sales;
     using CarDealer.Web.Models.SalesViewModels;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,8 +63,8 @@ namespace CarDealer.Web.Controllers
             return View(DiscountedSales);
         }
 
-        [Route("AddSale")]
-        public IActionResult AddSale()
+        [Route(nameof(Create))]
+        public IActionResult Create()
         {
 
             return View(new SaleFormModel
@@ -74,23 +75,49 @@ namespace CarDealer.Web.Controllers
             });
         }
 
-        [Route("AddSale")]
-        [HttpPost]
-        public IActionResult AddSale(SaleFormModel saleModel)
+        [Route(nameof(ReviewCreate))]
+        public IActionResult ReviewCreate(SaleFormModel saleModel)
         {
-
             if (!ModelState.IsValid)
             {
                 saleModel.Cars = this.GetCars();
                 saleModel.Customers = this.GetCustomers();
 
-                return View(saleModel);
+                return View(nameof(Create), saleModel);
             }
 
-            return RedirectToAction(nameof(AllSales));
-           
+            SaleReviewModel saleReviewModel = this.sales.SaleReview(
+                saleModel.CarId,
+                saleModel.CustomerId,
+                saleModel.Discount
+                );
+
+            return View(saleReviewModel);
         }
 
+        [HttpPost]
+        [Route(nameof(FinalizeCreate))]
+        public IActionResult FinalizeCreate(SaleReviewModel saleModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var createModel = new SaleFormModel
+                {
+                    Cars = this.GetCars(),
+                    Customers = this.GetCustomers(),
+                };
+                return View(nameof(Create), createModel);
+            }
+
+            this.sales.CreateNewSale(
+                saleModel.CarId,
+                saleModel.CustomerId,
+                saleModel.Discount
+                );
+
+            return RedirectToAction(nameof(AllSales));
+        }
 
 
 
