@@ -46,6 +46,16 @@
                     <li><a asp-controller="Cars" asp-action="CarsWithParts">Cars</a></li>
                     <li><a asp-controller="Parts" asp-action="All">Parts</a></li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Suppliers
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-action="Local" asp-controller="Suppliers">Locals</a></li>
+                            <li><a asp-action="Importers" asp-controller="Suppliers">Importers</a></li>
+                        </ul>
+
+                    </li>
 
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")

@@ -17,6 +17,7 @@ namespace CarDealer.Data
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Part> Parts { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

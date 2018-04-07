@@ -3,6 +3,7 @@ namespace CarDealer.Web.Controllers
 {
     using CarDealer.Services;
     using CarDealer.Web.Models.CarsViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
@@ -22,6 +23,9 @@ namespace CarDealer.Web.Controllers
             this.cars = cars;
             this.parts = parts;
         }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
 
         [Route("{make}", Order = 2)]
@@ -48,15 +52,18 @@ namespace CarDealer.Web.Controllers
             });
         }
 
+        [Authorize]
         [Route("create", Order = 1)]
         public IActionResult Create()
         {
             return View(new CarFormModel
             {
-                Parts = GetParts()
+                Parts = GetParts(),
+                StatusMessage = StatusMessage
             });
         }
 
+        [Authorize]
         [HttpPost]
         [Route("create", Order = 1)]
         public IActionResult Create(CarFormModel carModel)
@@ -72,6 +79,9 @@ namespace CarDealer.Web.Controllers
                 carModel.Model,
                 carModel.TravelledDistance,
                 carModel.PartsIds);
+
+
+            StatusMessage = "New Car have been created!";
 
             return RedirectToAction(nameof(CarsWithParts));
         }

@@ -4,6 +4,7 @@ namespace CarDealer.Web.Controllers
     using CarDealer.Services;
     using CarDealer.Services.Models.Sales;
     using CarDealer.Web.Models.SalesViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
@@ -63,6 +64,7 @@ namespace CarDealer.Web.Controllers
             return View(DiscountedSales);
         }
 
+        [Authorize]
         [Route(nameof(Create))]
         public IActionResult Create()
         {
@@ -75,6 +77,7 @@ namespace CarDealer.Web.Controllers
             });
         }
 
+        [Authorize]
         [Route(nameof(ReviewCreate))]
         public IActionResult ReviewCreate(SaleFormModel saleModel)
         {
@@ -95,6 +98,7 @@ namespace CarDealer.Web.Controllers
             return View(saleReviewModel);
         }
 
+        [Authorize]
         [HttpPost]
         [Route(nameof(FinalizeCreate))]
         public IActionResult FinalizeCreate(SaleReviewModel saleModel)

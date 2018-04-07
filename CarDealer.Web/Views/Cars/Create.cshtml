@@ -2,6 +2,8 @@
 
 <h4>Create new Car</h4>
 <hr />
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
 <div class="row">
     <div class="col-md-4">
         @Html.Partial("_CarForm", Model)

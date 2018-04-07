@@ -20,5 +20,7 @@ namespace CarDealer.Web.Models.CarsViewModels
         public IEnumerable<int> PartsIds { get; set; }
 
         public IEnumerable<SelectListItem> Parts { get; set; }
+
+        public string StatusMessage { get; set; }
     }
 }
