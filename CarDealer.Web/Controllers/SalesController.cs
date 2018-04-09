@@ -1,29 +1,38 @@
 ﻿
 namespace CarDealer.Web.Controllers
 {
+    using CarDealer.Data.Models;
     using CarDealer.Services;
     using CarDealer.Services.Models.Sales;
     using CarDealer.Web.Models.SalesViewModels;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     [Route("sales")]
     public class SalesController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ISalesService sales;
         private readonly ICustomersService customers;
         private readonly ICarsService cars;
+        private readonly ILogService logs;
 
-        public SalesController(ISalesService sales,
+        public SalesController(UserManager<User> userManager, 
+                               ISalesService sales,
                                ICustomersService customers,
-                               ICarsService cars)
+                               ICarsService cars,
+                               ILogService logs)
         {
+            _userManager = userManager;
             this.sales = sales;
             this.customers = customers;
             this.cars = cars;
+            this.logs = logs;
         }
 
 
@@ -119,6 +128,9 @@ namespace CarDealer.Web.Controllers
                 saleModel.CustomerId,
                 saleModel.Discount
                 );
+
+            var userId = _userManager.GetUserId(HttpContext.User);
+            this.logs.Add(userId, "Add", "Sale", DateTime.Now);
 
             return RedirectToAction(nameof(AllSales));
         }

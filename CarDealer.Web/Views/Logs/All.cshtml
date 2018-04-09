@@ -1,0 +1,56 @@
+﻿@model LogsListViewModel
+
+
+@{
+    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
+    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
+
+}
+
+<ul class="pagination">
+    <li class="page-item @peviousPageDisable">
+        <a class="page-link" href="all?page=@Model.PreviousPage">Previous</a>
+    </li>
+    <li class="page-item @nextPageDisable">
+        <a class="page-link" href="all?page=@Model.NextPage">Next</a>
+    </li>
+</ul>
+
+<table class="table table-striped table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Operation
+            </th>
+            <th>
+                Modified Table
+            </th>
+            <th>
+                Time
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AllLogs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Operation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedTable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
