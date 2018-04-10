@@ -19,15 +19,21 @@ namespace CarDealer.Web.Controllers
         }
 
 
-        public IActionResult All(int page = 1)
+        public IActionResult All(string search, int page = 1)
         {
-            var result  = this.logs.All(page, pageSize);
+           // var result  = this.logs.All(search, page, pageSize);
+
+            var totalPages = (int)Math.Ceiling(this.logs.Total() / (double)pageSize);
+
+            page = Math.Max(page, 1);
+            page = Math.Min(page, totalPages);
 
             return View(new LogsListViewModel
             {
-                AllLogs = this.logs.All(page, pageSize),
-                CurrentPage= page,
-                TotalPages = (int)Math.Ceiling(this.logs.Total() / (double)pageSize)
+                AllLogs = this.logs.All(search, page, pageSize),
+                CurrentPage = page,
+                Search = search,
+                TotalPages = totalPages
             });
         }
     }

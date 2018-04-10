@@ -17,5 +17,6 @@ namespace CarDealer.Services
         bool Exists(int id);
 
         void Edit(int id, string name, bool isImporter);
+        void Delete(int id);
     }
 }

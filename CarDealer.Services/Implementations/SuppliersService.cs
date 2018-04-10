@@ -8,6 +8,7 @@ namespace CarDealer.Services.Implementations
     using CarDealer.Data.Models;
     using System.Collections.Generic;
     using CarDealer.Services.Models.Suppliers;
+    using Microsoft.EntityFrameworkCore;
 
     public class SuppliersService : ISuppliersService
     {
@@ -81,6 +82,31 @@ namespace CarDealer.Services.Implementations
             supplier.IsImporter = isImporter;
 
             db.SaveChanges();
+        }
+
+
+
+
+        public void Delete(int id)
+        {
+            var supplier = this.db.Suppliers.Find(id);
+
+            var supplierWithParts = this.db.
+                       Suppliers.Include(s => s.Parts).ToList()
+                         .Where(s => s.Id == id);
+
+            if (supplier == null)
+            {
+                return;
+            }
+
+            var parts = supplier.Parts;
+
+            db.Parts.RemoveRange(parts);
+            db.Suppliers.Remove(supplier);
+
+            db.SaveChanges();
+
         }
     }
 }

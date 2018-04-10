@@ -9,7 +9,7 @@ namespace CarDealer.Services
     {
         void Add(string userId, string operation, string modifiedTable, DateTime Date);
 
-        IEnumerable<LogModel> All(int page, int pageSize);
+        IEnumerable<LogModel> All(string search, int page, int pageSize);
 
         int Total();
     }

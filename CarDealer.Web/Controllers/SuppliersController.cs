@@ -118,6 +118,27 @@ namespace CarDealer.Web.Controllers
             return RedirectToAction(suppType);
         }
 
+        [Authorize]
+        [Route("Suppliers/delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            return View(id);
+        }
+
+
+        [Authorize]
+        [Route("Suppliers/confirmDelete/{id}")]
+        public IActionResult ConfirmDelete(int id)
+        {
+            this.suppliers.Delete(id);
+
+            string userId = this.GetUserId();
+            var date = DateTime.Now;
+            this.logs.Add(userId, "Delete", "Suppliers", date);
+
+            return RedirectToAction(nameof(Local));
+        }
+
 
 
         private IEnumerable<SupplierModel> GetSupplierModel(bool isImporter)

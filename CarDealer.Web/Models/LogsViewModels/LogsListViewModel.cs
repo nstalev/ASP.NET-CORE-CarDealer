@@ -8,6 +8,8 @@ namespace CarDealer.Web.Models.LogsViewModels
     {
         public IEnumerable<LogModel> AllLogs { get; set; }
 
+        public string Search { get; set; }
+
         public int CurrentPage { get; set; }
 
         public int TotalPages { get; set; }
