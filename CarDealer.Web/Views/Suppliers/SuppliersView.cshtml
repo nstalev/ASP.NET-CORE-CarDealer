@@ -22,6 +22,8 @@
                 <th>
                     @Html.DisplayNameFor(model => model.NunOfParts)
                 </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +38,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NunOfParts)
             </td>
-           
+            @{
+                var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
+            }
+
+            <td>
+                <a asp-controller="Suppliers" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
+                <a asp-controller="Suppliers" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+
         </tr>
 }
     </tbody>

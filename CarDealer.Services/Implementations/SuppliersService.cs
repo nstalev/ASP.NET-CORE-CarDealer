@@ -5,6 +5,7 @@ namespace CarDealer.Services.Implementations
     using System;
     using System.Linq;
     using CarDealer.Data;
+    using CarDealer.Data.Models;
     using System.Collections.Generic;
     using CarDealer.Services.Models.Suppliers;
 
@@ -18,7 +19,10 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
-     
+        public bool Exists(int id)
+        {
+            return db.Suppliers.Any(s => s.Id == id);
+        }
 
         public IEnumerable<SupplierModel> Suppliers(bool isImporter)
         {
@@ -42,6 +46,41 @@ namespace CarDealer.Services.Implementations
                     Id = s.Id,
                     Name= s.Name
                 });
+        }
+
+        public void Create(string name, bool isImporter)
+        {
+            var supplier = new Supplier()
+            {
+                Name = name,
+                IsImporter = isImporter
+            };
+
+            db.Suppliers.Add(supplier);
+            db.SaveChanges();
+        }
+
+        public SupplierEditModel ById(int id)
+        {
+            return this.db
+                .Suppliers
+                .Where(s => s.Id == id)
+                .Select(s => new SupplierEditModel
+                {
+                    Name= s.Name,
+                    IsImporter= s.IsImporter
+                })
+                .FirstOrDefault();
+        }
+
+        public void Edit(int id, string name, bool isImporter)
+        {
+           var supplier =  db.Suppliers.Find(id);
+
+            supplier.Name = name;
+            supplier.IsImporter = isImporter;
+
+            db.SaveChanges();
         }
     }
 }
