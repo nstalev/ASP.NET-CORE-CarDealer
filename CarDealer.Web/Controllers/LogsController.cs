@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarDealer.Services;
 using CarDealer.Web.Models.LogsViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarDealer.Web.Controllers
 {
     public class LogsController : Controller
     {
-        private const int pageSize = 5;
+        private const int pageSize = 10;
         private readonly ILogService logs;
 
         public LogsController(ILogService logs)
@@ -18,7 +19,7 @@ namespace CarDealer.Web.Controllers
             this.logs = logs;
         }
 
-
+        [Authorize]
         public IActionResult All(string search, int page = 1)
         {
            // var result  = this.logs.All(search, page, pageSize);
@@ -35,6 +36,16 @@ namespace CarDealer.Web.Controllers
                 Search = search,
                 TotalPages = totalPages
             });
+        }
+
+
+        [Authorize]
+        public IActionResult Clear()
+        {
+            this.logs.Clear();
+
+            return RedirectToAction(nameof(All),
+                new { search = string.Empty, page = 1 });
         }
     }
 }

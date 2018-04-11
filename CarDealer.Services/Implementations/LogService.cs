@@ -39,11 +39,6 @@ namespace CarDealer.Services.Implementations
         public IEnumerable<LogModel> All(string search, int page, int pageSize)
         {
 
-            //var test = GetLogsAsQuerable(search)
-            //    .OrderByDescending(l => l.Date)
-            //    .Skip((page - 1) * pageSize)
-            //    .Take(pageSize).ToList();
-
 
             return GetLogsAsQuerable(search)
                 .OrderByDescending(l => l.Date)
@@ -59,6 +54,13 @@ namespace CarDealer.Services.Implementations
                 })
                 .ToList();
 
+        }
+
+        public void Clear()
+        {
+            var sqlQuery = $"DELETE FROM {nameof(Log)}s";
+            this.db.Database.ExecuteSqlCommand(sqlQuery);
+            this.db.SaveChanges();
         }
 
         public int Total()

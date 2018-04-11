@@ -12,5 +12,7 @@ namespace CarDealer.Services
         IEnumerable<LogModel> All(string search, int page, int pageSize);
 
         int Total();
+
+        void Clear();
     }
 }
