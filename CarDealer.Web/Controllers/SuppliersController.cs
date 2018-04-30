@@ -10,6 +10,7 @@ namespace CarDealer.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using System;
     using Microsoft.AspNetCore.Authorization;
+    using CarDealer.Web.Extensions;
 
     public class SuppliersController : Controller
     {
@@ -67,6 +68,8 @@ namespace CarDealer.Web.Controllers
 
             string suppType = supplierModel.IsImporter ? "Importers" : "Local";
 
+            TempData.AddSuccessMessage($"Supplier {supplierModel.Name} has been created successfully");
+
             return RedirectToAction(suppType);
         }
 
@@ -112,6 +115,7 @@ namespace CarDealer.Web.Controllers
             var date = DateTime.Now;
             this.logs.Add(userId, "Edit", "Suppliers", date);
 
+            TempData.AddSuccessMessage($"Supplier {supplierModel.Name} has been edited successfully");
 
             string suppType = supplierModel.IsImporter ? "Importers" : "Local";
 
@@ -135,6 +139,8 @@ namespace CarDealer.Web.Controllers
             string userId = this.GetUserId();
             var date = DateTime.Now;
             this.logs.Add(userId, "Delete", "Suppliers", date);
+
+            TempData.AddSuccessMessage($"Supplier with id: {id} and all his parts have been deleted!");
 
             return RedirectToAction(nameof(Local));
         }

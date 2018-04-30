@@ -5,8 +5,6 @@ namespace CarDealer.Services.Implementations
     using System.Linq;
     using CarDealer.Data;
     using CarDealer.Services.Models.Cars;
-    using CarDealer.Services.Models;
-    using Microsoft.EntityFrameworkCore;
     using CarDealer.Data.Models;
     using CarDealer.Services.Models.Parts;
 

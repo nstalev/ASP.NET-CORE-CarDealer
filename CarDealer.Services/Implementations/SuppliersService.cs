@@ -1,7 +1,6 @@
 ﻿
 namespace CarDealer.Services.Implementations
 {
-
     using System;
     using System.Linq;
     using CarDealer.Data;

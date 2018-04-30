@@ -2,7 +2,7 @@
 
 
 @{
-    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
+    var peviousPageDisable = Model.CurrentPage <= 1 ? "disabled" : String.Empty;
     var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
     var searchQuery = string.IsNullOrEmpty(Model.Search) ? string.Empty : ("search=" + Model.Search + "&");
 

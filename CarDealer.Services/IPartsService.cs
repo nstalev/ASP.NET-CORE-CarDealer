@@ -1,5 +1,4 @@
 ﻿
-
 namespace CarDealer.Services
 {
     using CarDealer.Services.Models.Parts;

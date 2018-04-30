@@ -1,14 +1,15 @@
 ﻿
-using CarDealer.Data;
-using CarDealer.Data.Models;
-using CarDealer.Services.Models.Logs;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CarDealer.Services.Implementations
 {
+    using CarDealer.Data;
+    using CarDealer.Data.Models;
+    using CarDealer.Services.Models.Logs;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class LogService : ILogService
     {
 
@@ -39,7 +40,6 @@ namespace CarDealer.Services.Implementations
         public IEnumerable<LogModel> All(string search, int page, int pageSize)
         {
 
-
             return GetLogsAsQuerable(search)
                 .OrderByDescending(l => l.Date)
                 .Skip((page - 1) * pageSize)
@@ -53,7 +53,6 @@ namespace CarDealer.Services.Implementations
 
                 })
                 .ToList();
-
         }
 
         public void Clear()
@@ -63,9 +62,12 @@ namespace CarDealer.Services.Implementations
             this.db.SaveChanges();
         }
 
-        public int Total()
+        public int Total(string search)
         {
-            return this.db.Logs.Count();
+            return this.db.Logs
+               .Select(l => l.User)
+                .Where(u => u.UserName.ToLower().Contains(search.ToLower()))
+               .Count();
         }
 
 
@@ -81,8 +83,8 @@ namespace CarDealer.Services.Implementations
                                     .Where(l => l.User.UserName.ToLower().Contains(search.ToLower()));
             }
 
-
             return logsAsQuerable.ToList();
+
         }
     }
 }

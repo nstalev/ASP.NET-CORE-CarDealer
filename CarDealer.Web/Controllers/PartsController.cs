@@ -8,6 +8,7 @@ namespace CarDealer.Web.Controllers
     using CarDealer.Services;
     using CarDealer.Web.Models.PartsViewModels;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using CarDealer.Web.Extensions;
 
     public class PartsController : Controller
     {
@@ -61,9 +62,10 @@ namespace CarDealer.Web.Controllers
                 partModel.SupplierId
                 );
 
+            TempData.AddSuccessMessage($"Part {partModel.Name} has been created successfully");
 
 
-          return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(All));
         }
 
         [Route("parts/edit/{id}")]
@@ -106,6 +108,9 @@ namespace CarDealer.Web.Controllers
 
             this.parts.Edit(partModel.Id, partModel.Price, partModel.Quantity);
 
+            TempData.AddSuccessMessage($"Part {partModel.Name} has been edited successfully");
+
+
             return RedirectToAction(nameof(All));
         }
 
@@ -131,6 +136,9 @@ namespace CarDealer.Web.Controllers
             }
 
             this.parts.Delete(id);
+
+            TempData.AddSuccessMessage($"Part {partModel.Name} has been deleted successfully");
+
 
             return RedirectToAction(nameof(All));
         }
