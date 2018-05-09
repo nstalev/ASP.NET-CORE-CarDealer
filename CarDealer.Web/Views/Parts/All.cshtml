@@ -10,6 +10,8 @@
     <a class="btn btn-sm btn-primary" asp-action="Create">Create New</a>
 </p>
 
+
+
 @{ 
     var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
     var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
@@ -76,6 +78,7 @@
 
             <td>
                 <a asp-controller="Parts" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
+
                 <a asp-controller="Parts" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
@@ -103,3 +106,5 @@
         </a>
     </li>
 </ul>
+
+

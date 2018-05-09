@@ -13,41 +13,54 @@
 <table class="table table-bordered table-responsive table-hover">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NunOfParts)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NunOfParts)
+            </th>
             <th>
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NunOfParts)
-            </td>
-            @{
-                var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NunOfParts)
+                </td>
+                @{
+                    var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
+                }
 
-            <td>
-                <a asp-controller="Suppliers" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
-                <a asp-controller="Suppliers" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
-            </td>
+                <td>
+                    <a asp-controller="Suppliers" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-controller="Suppliers" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
+                    <button class="btn btn-primary btn-sm" data-toggle="confirmation" onclick="DeleteFunc(@item.Id)">Delete</button>
 
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<script>
+    function DeleteFunc(id) {
+        var result = confirm("Are you sure you want to delete this part")
+
+        if (result) {
+            console.log(`Item with id ${id}`);
+            window.location.href = `/suppliers/confirmdelete/${id}`;
+        }
+    }
+</script>
