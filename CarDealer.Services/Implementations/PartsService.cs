@@ -22,10 +22,11 @@
         }
 
 
-        public IEnumerable<PartsListModel> AllParts(int page, int pageSize)
+        public IEnumerable<PartsListModel> AllParts(string search, int page, int pageSize)
         {
             return db
                 .Parts
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()))
                 .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -67,9 +68,11 @@
         }
      
 
-        public int Total()
+        public int Total(string search)
         {
-            return this.db.Parts.Count();
+            return this.db.Parts
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()))
+                .Count();
         }
 
         public PartModel ById(int id)

@@ -4,85 +4,103 @@
     ViewData["Title"] = "All";
 }
 
-<h2>All</h2>
+@{
+    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
+    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
+    var searchQuery = string.IsNullOrEmpty(Model.Search) ? string.Empty : ("search=" + Model.Search + "&");
+}
+
+<h2>Parts </h2>
 
 <p>
     <a class="btn btn-sm btn-primary" asp-action="Create">Create New</a>
 </p>
+<hr />
 
 
 
-@{ 
-    var peviousPageDisable = Model.CurrentPage == 1 ? "disabled" : String.Empty;
-    var nextPageDisable = Model.CurrentPage == Model.TotalPages ? "disabled" : String.Empty;
 
-}
+<form>
+    <div class="row">
+        <div class="col-md-4">
+            <input name="Search" type="text" class="form-control" value="@Model.Search"/>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+
+    </div>
+</form>
+
+
+
 
 <ul class="pagination">
     <li class="page-item @peviousPageDisable">
-        <a class="page-link  @peviousPageDisable" href="all?page=@Model.PreviousPage" tabindex="-1">Previous</a>
+        <a class="page-link  @peviousPageDisable" href="all?@(searchQuery)page=@Model.PreviousPage" tabindex="-1">Previous</a>
     </li>
     @for (int i = 1; i <= Model.TotalPages; i++)
     {
-        <li class="page-item @(Model.CurrentPage == i ? "active": String.Empty)"><a class="page-link" href="all?page=@i">@i</a></li>
+        <li class="page-item @(Model.CurrentPage == i ? "active": String.Empty)"><a class="page-link" href="all?@(searchQuery)page=@i">@i</a></li>
 
 
     }
     <li class="page-item @nextPageDisable">
-        <a class="page-link @nextPageDisable" href="all?page=@Model.NextPage">Next</a>
+        <a class="page-link @nextPageDisable" href="all?@(searchQuery)page=@Model.NextPage">Next</a>
     </li>
 </ul>
 
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th>
-                    Supplier
-                </th>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Supplier
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Parts) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier)
-            </td>
-            @{ 
-                var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
-            }
+        @foreach (var item in Model.Parts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier)
+                </td>
+                @{
+                    var routeValue = new Dictionary<string, string> { ["id"] = item.Id.ToString() };
+                }
 
-            <td>
-                <a asp-controller="Parts" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
+                <td>
+                    <a asp-controller="Parts" asp-action="Edit" asp-all-route-data="routeValue" class="btn btn-warning btn-sm">Edit</a>
 
-                <a asp-controller="Parts" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
-}
+                    <a asp-controller="Parts" asp-action="Delete" asp-all-route-data="routeValue" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

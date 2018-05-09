@@ -14,7 +14,7 @@ namespace CarDealer.Web.Controllers
     {
         private readonly IPartsService parts;
         private readonly ISuppliersService suppliers;
-        private const int pageSize = 25;
+        private const int pageSize = WebConstants.PartsListingPageSize;
 
         public PartsController(IPartsService parts,
                                ISuppliersService suppliers)
@@ -23,14 +23,21 @@ namespace CarDealer.Web.Controllers
             this.suppliers = suppliers;
         }
 
-        public IActionResult All(int page = 1)
+        public IActionResult All(string search = "", int page = 1)
         {
+            if (string.IsNullOrEmpty(search))
+            {
+                search = "";
+            }
+
+            var totalParts = this.parts.Total(search);
 
             var allParts = new PartsListViewModel
             {
-                Parts = parts.AllParts(page, pageSize),
+                Search = search,
+                Parts = parts.AllParts(search, page, pageSize),
                 CurrentPage = page,
-                TotalPages = (int)Math.Ceiling(this.parts.Total() / (double)pageSize)
+                TotalPages = (int)Math.Ceiling(totalParts / (double)pageSize)
             };
 
             return View(allParts);

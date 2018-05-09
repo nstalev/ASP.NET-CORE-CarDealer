@@ -6,7 +6,7 @@ namespace CarDealer.Services
 
     public interface IPartsService
     {
-        IEnumerable<PartsListModel> AllParts(int page, int pageSize);
+        IEnumerable<PartsListModel> AllParts(string search, int page, int pageSize);
 
         PartModel ById(int id);
 
@@ -16,7 +16,7 @@ namespace CarDealer.Services
 
         IEnumerable<PartBasicModel> BasicParts();
 
-        int Total();
+        int Total(string search);
 
         bool Exists(int id);
         void Delete(int id);
