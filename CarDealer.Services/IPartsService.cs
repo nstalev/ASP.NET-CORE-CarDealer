@@ -20,5 +20,6 @@ namespace CarDealer.Services
 
         bool Exists(int id);
         void Delete(int id);
+        IEnumerable<string> GetNames(string term);
     }
 }

@@ -30,6 +30,7 @@ namespace CarDealer.Web.Controllers
                 search = "";
             }
 
+
             var totalParts = this.parts.Total(search);
 
             var allParts = new PartsListViewModel
@@ -41,6 +42,13 @@ namespace CarDealer.Web.Controllers
             };
 
             return View(allParts);
+        }
+
+        public JsonResult GetPartNames(string term)
+        {
+            var partNames = this.parts.GetNames(term);
+
+            return Json(partNames);
         }
 
 

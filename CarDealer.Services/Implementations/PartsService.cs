@@ -116,7 +116,12 @@
             db.Parts.Remove(part);
             db.SaveChanges();
         }
-
-       
+        
+        public IEnumerable<string> GetNames(string term)
+        {
+            return this.db.Parts
+                .Where(p => p.Name.ToLower().StartsWith(term.ToLower()))
+                .Select(p => p.Name).ToList();
+        }
     }
 }

@@ -18,12 +18,10 @@
 <hr />
 
 
-
-
 <form>
     <div class="row">
         <div class="col-md-4">
-            <input name="Search" type="text" class="form-control" value="@Model.Search"/>
+            <input id="searchParts" name="Search" type="text" class="form-control" value="@Model.Search" />
         </div>
         <div class="col-md-4">
             <input type="submit" value="Search" class="btn btn-default" />
@@ -126,3 +124,21 @@
 </ul>
 
 
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+
+    <link href="~/lib/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            console.log("ready!");
+            $("#searchParts").autocomplete({
+                source: '@Url.Action("GetPartNames")'
+            });
+        });
+    </script>
+
+}

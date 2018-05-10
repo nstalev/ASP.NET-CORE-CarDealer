@@ -7,6 +7,7 @@ namespace CarDealer.Web.Models.PartsViewModels
 
     public class PartsListViewModel
     {
+        
 
         public IEnumerable<PartsListModel> Parts { get; set;  }
 
