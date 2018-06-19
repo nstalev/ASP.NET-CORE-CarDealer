@@ -25,18 +25,21 @@ namespace CarDealer.Services.Implementations
             return db.Customers.Any(c => c.Id == id);
         }
 
-        public IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order)
+        public IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order, string search)
         {
             var customersQuery = this.db.Customers.AsQueryable();
 
             switch (order)
             {
                 case OrderDirection.Ascending:
-                    customersQuery = customersQuery.OrderBy(b => b.BirthDate).ThenBy(y => y.IsYoungDriver);
+                    customersQuery = customersQuery
+                        .Where(c => c.Name.ToLower().Contains(search.ToLower()))
+                        .OrderBy(b => b.BirthDate).ThenBy(y => y.IsYoungDriver);
                     break;
                 case OrderDirection.Descending:
-                    customersQuery = customersQuery.OrderByDescending(b => b.BirthDate).ThenBy(y => y.IsYoungDriver);
-
+                    customersQuery = customersQuery
+                        .Where(c => c.Name.ToLower().Contains(search.ToLower()))
+                        .OrderByDescending(b => b.BirthDate).ThenBy(y => y.IsYoungDriver);
                     break;
                 default:
                     throw new InvalidOperationException($"Invalid Order directions {order}");

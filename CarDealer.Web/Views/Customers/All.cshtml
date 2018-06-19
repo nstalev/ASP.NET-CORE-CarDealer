@@ -1,32 +1,47 @@
-﻿@model IEnumerable<CarDealer.Services.Models.Customers.CustomerModel>
+﻿@model AllCustomersListViewModel
 
 @{
     ViewData["Title"] = "All";
 }
 
-<h2>All</h2>
+<h2>Customers</h2>
+
 
 <p>
     <a class="btn btn-sm btn-primary" asp-action="Create">Create New</a>
 </p>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-4">
+            <input class="form-control" name="search" id="searchText" type="text" value="@Model.Search" />
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+<br />
 
 <table class="table table-striped table-bordered table-responsive table-hover">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BirthDate)
+                   BirthDate
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IsYoungDriver)
+                    IsYoungDriver
                 </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Customers) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

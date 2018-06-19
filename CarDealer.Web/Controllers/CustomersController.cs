@@ -15,15 +15,28 @@
         }
 
 
-        public IActionResult All(string order)
+        public IActionResult All(string order, string search)
         {
+
             var orderDirection = order.ToLower() == "ascending"
                 ? OrderDirection.Ascending
                 : OrderDirection.Descending;
 
-            var result = this.customers.OrderedCustomers(orderDirection);
+            if (string.IsNullOrEmpty(search))
+            {
+                search = "";
+            }
 
-            return View(result);
+            var customers = this.customers.OrderedCustomers(orderDirection, search);
+
+            var customersVM = new AllCustomersListViewModel()
+            {
+                Customers = customers,
+                Search = search
+            };
+
+
+            return View(customersVM);
         }
 
 

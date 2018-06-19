@@ -7,7 +7,7 @@ namespace CarDealer.Services
 
     public interface ICustomersService
     {
-        IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order);
+        IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order, string search);
 
         IEnumerable<CustomerBasicModel> AllCustomers();
 
